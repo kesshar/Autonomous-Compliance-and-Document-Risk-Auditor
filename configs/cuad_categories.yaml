@@ -1,0 +1,129 @@
+# CUAD 15 Selected Contractual Attributes Configuration
+# Preserves official CUAD category names, descriptions, and formats from The Atticus Project.
+
+version: "1.0"
+dataset: "CUAD v1"
+total_selected: 15
+
+categories:
+  - name: "Parties"
+    aliases:
+      - "Parties"
+    description: "The two or more parties who signed the contract"
+    output_type: "list[str]"
+    task_type: "value_extraction"
+    extraction_instructions: "Extract the legal names of all contracting entities or individuals entering into the agreement. Exclude generic definitions (e.g., 'Company', 'Distributor') unless proper names are unavailable."
+
+  - name: "Agreement Date"
+    aliases:
+      - "Agreement Date"
+    description: "The date of the contract"
+    output_type: "date"
+    task_type: "value_extraction"
+    extraction_instructions: "Extract the formal date when the agreement was entered into or executed, typically found in the preamble or signature block. Normalize to standard date format (YYYY-MM-DD)."
+
+  - name: "Effective Date"
+    aliases:
+      - "Effective Date"
+    description: "The date when the contract is effective"
+    output_type: "date"
+    task_type: "value_extraction"
+    extraction_instructions: "Extract the date on which the rights and obligations under the contract become operative. May differ from the Agreement Date."
+
+  - name: "Expiration Date"
+    aliases:
+      - "Expiration Date"
+    description: "On what date will the contract's initial term expire?"
+    output_type: "date_or_duration"
+    task_type: "value_extraction"
+    extraction_instructions: "Extract the exact date when the initial term expires, the stated duration from the effective date (e.g., '3 years'), or identify if the contract is 'Perpetual'."
+
+  - name: "Renewal Term"
+    aliases:
+      - "Renewal Term"
+    description: "What is the renewal term after the initial term expires? This includes automatic extensions and unilateral extensions with prior notice."
+    output_type: "duration"
+    task_type: "value_extraction"
+    extraction_instructions: "Extract the duration of any extension or renewal period following the expiration of the initial term (e.g., 'successive 1-year terms', 'automatic 2 years', 'Perpetual')."
+
+  - name: "Notice Period to Terminate Renewal"
+    aliases:
+      - "Notice to Terminate Renewal"
+      - "Notice Period to Terminate Renewal"
+    description: "What is the notice period required to terminate renewal?"
+    output_type: "duration"
+    task_type: "value_extraction"
+    extraction_instructions: "Extract the advance written notice period required by either party to prevent an automatic extension or renewal (e.g., '30 days', '60 days prior to end of term')."
+
+  - name: "Governing Law"
+    aliases:
+      - "Governing Law"
+    description: "Which state/country's law governs the interpretation of the contract?"
+    output_type: "string"
+    task_type: "value_extraction"
+    extraction_instructions: "Extract the jurisdiction whose laws govern the validity, interpretation, and performance of the contract (e.g., 'Delaware', 'State of New York', 'England and Wales')."
+
+  - name: "Termination for Convenience"
+    aliases:
+      - "Termination for Convenience"
+    description: "Can a party terminate this contract without cause (solely by giving a notice and allowing a waiting period to expire)?"
+    output_type: "boolean"
+    task_type: "presence_absence"
+    extraction_instructions: "Determine whether either party possesses the right to terminate the contract at will without showing breach or cause, usually upon advance written notice. Extract supporting clause text."
+
+  - name: "Cap on Liability"
+    aliases:
+      - "Cap on Liability"
+    description: "Does the contract include a cap on liability upon the breach of a party's obligation? This includes time limitation for the counterparty to bring claims or maximum amount for recovery."
+    output_type: "presence_or_value"
+    task_type: "presence_or_value"
+    extraction_instructions: "Identify whether liability is capped, and if so, extract the monetary formula (e.g., 'fees paid in the prior 12 months', '$1,000,000') or temporal bar on claims, along with the clause text."
+
+  - name: "Insurance"
+    aliases:
+      - "Insurance"
+    description: "Is there a requirement for insurance that must be maintained by one party for the benefit of the counterparty?"
+    output_type: "boolean"
+    task_type: "presence_absence"
+    extraction_instructions: "Determine if there is an affirmative obligation on a party to secure and maintain commercial liability, professional indemnity, workers' compensation, or other insurance policies."
+
+  - name: "Audit Rights"
+    aliases:
+      - "Audit Rights"
+    description: "Does a party have the right to audit the books, records, or physical locations of the counterparty to ensure compliance with the contract?"
+    output_type: "boolean"
+    task_type: "presence_absence"
+    extraction_instructions: "Determine whether either party has the right to inspect, audit, or examine accounting books, compliance logs, data facilities, or business premises of the counterparty."
+
+  - name: "Uncapped Liability"
+    aliases:
+      - "Uncapped Liability"
+    description: "Is a party's liability uncapped upon the breach of its obligation in the contract? This also includes uncap liability for a particular type of breach such as IP infringement or breach of confidentiality obligation."
+    output_type: "boolean"
+    task_type: "presence_absence"
+    extraction_instructions: "Determine whether there are express carve-outs from liability limitations (e.g., gross negligence, willful misconduct, indemnification for IP infringement, or breach of confidentiality) making liability unlimited."
+
+  - name: "Liquidated Damages"
+    aliases:
+      - "Liquidated Damages"
+    description: "Does the contract contain a clause that would award either party liquidated damages for breach or a fee upon the termination of a contract (termination fee)?"
+    output_type: "presence_or_value"
+    task_type: "presence_or_value"
+    extraction_instructions: "Determine whether the contract specifies a pre-determined sum or termination fee payable upon breach, default, or early termination. Extract the fee amount or formula and clause context."
+
+  - name: "Anti-Assignment"
+    aliases:
+      - "Anti-Assignment"
+    description: "Is consent or notice required of a party if the contract is assigned to a third party?"
+    output_type: "boolean"
+    task_type: "presence_absence"
+    extraction_instructions: "Determine if the contract restricts transfer or assignment of rights/obligations without prior written consent or notice, including assignment by merger or operation of law."
+
+  - name: "License Grant"
+    aliases:
+      - "License Grant"
+    description: "Does the contract contain a license granted by one party to its counterparty?"
+    output_type: "boolean"
+    task_type: "presence_absence"
+    extraction_instructions: "Determine if the contract contains an express grant of license to intellectual property, software, patents, trademarks, or copyrighted materials from one party to another."
+
